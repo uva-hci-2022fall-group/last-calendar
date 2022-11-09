@@ -1,7 +1,7 @@
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-import FullCalendar from "@fullcalendar/react";
 import React from "react";
 
 
