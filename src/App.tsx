@@ -6,11 +6,12 @@ import {
 } from "react-router-dom";
 import EventCreationPage from "./pages/EventCreationPage";
 import MainCalendar from "./pages/MainPage";
+import DayViewPage from "./pages/DayViewPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <MainCalendar/>
+        element: <DayViewPage/>
     },
     {
         path: "/event/new",
