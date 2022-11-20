@@ -11,5 +11,12 @@ type EventTask = {
     end: TimeInDay
 }
 
+const compareTimeInDay = (a: TimeInDay, b: TimeInDay) => {
+    const minuteA = a.hour * 60 + a.minute
+    const minuteB = b.hour * 60 + b.minute
+    return minuteB - minuteA
+}
+
 
 export type {TimeInDay, EventTask}
+export {compareTimeInDay}

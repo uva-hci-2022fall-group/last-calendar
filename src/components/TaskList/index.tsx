@@ -1,39 +1,34 @@
 import {Col, List, Radio, Row} from "antd";
 import TaskRow from "../TaskRow";
-import {EventTask} from "../../models/eventTask";
+import {compareTimeInDay, EventTask} from "../../models/eventTask";
 import {useEffect, useState} from "react";
-
 
 const TaskList = (props: {
     events: EventTask[]
 }) => {
     const {events} = props
-    const [sortByPriority, setSortByPriority] = useState(false)
-    const [sortedTasks, setSortedTasks] = useState(events)
+    const [sortedTasks, setSortedTasks] = useState<EventTask[]>(events)
+    const [sort, setSort] = useState<'asc' | 'desc'>('asc')
     useEffect(() => {
-        setSortedTasks(sortedTasks.sort((a, b) => {
-            return 0
-        }))
-    }, [sortByPriority])
+        const sign = sort === 'asc' ? 1 : -1
+        setSortedTasks(sortedTasks.sort((a, b) => sign * compareTimeInDay(a.start, b.start)))
+    }, [sort, sortedTasks])
     return (
         <>
             <Row style={{marginTop: 10}}>
                 <Col span={12}>
-                    <Radio.Group defaultValue="a">
-                        <Radio.Button value="a">order by time</Radio.Button>
-                        <Radio.Button value="b">order by priority</Radio.Button>
-                    </Radio.Group>
-                </Col>
-                <Col span={12}>
-                    <Radio.Group defaultValue="a">
-                        <Radio.Button value="a">asc</Radio.Button>
-                        <Radio.Button value="b">desc</Radio.Button>
+                    <Radio.Group value={sort} onChange={e => {
+                        console.log("changed")
+                        setSort(e.target.value)
+                    }}>
+                        <Radio.Button value={'asc'}>asc</Radio.Button>
+                        <Radio.Button value={'desc'}>desc</Radio.Button>
                     </Radio.Group>
                 </Col>
             </Row>
             <List
                 itemLayout="horizontal"
-                dataSource={events}
+                dataSource={sortedTasks}
                 renderItem={item => <List.Item>
                     <TaskRow event={item}/>
                 </List.Item>}
