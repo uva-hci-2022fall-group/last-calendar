@@ -1,15 +1,44 @@
+import moment from "moment";
+
+type DateStamp = {
+    year: number
+    month: number
+    day: number
+}
 
 type TimeInDay = {
     hour: number,
     minute: number
 }
 
+class TimeSlot {
+    constructor(date: DateStamp, start: TimeInDay, end: TimeInDay) {
+        this.date = date
+        this.start = start;
+        this.end = end;
+    }
+    date: DateStamp
+    start: TimeInDay
+    end: TimeInDay
+
+    period() {
+        return (this.end.hour - this.start.hour) * 60 + (this.end.minute - this.start.minute)
+    }
+}
+
 type EventTask = {
     title: string
     priority: number
+    date?: DateStamp
     start: TimeInDay
     end: TimeInDay
 }
+
+type TaskPart = {
+    name: string
+    period: number
+}
+
 
 const compareTimeInDay = (a: TimeInDay, b: TimeInDay) => {
     const minuteA = a.hour * 60 + a.minute
@@ -17,6 +46,67 @@ const compareTimeInDay = (a: TimeInDay, b: TimeInDay) => {
     return minuteB - minuteA
 }
 
+class FlexibleEvent {
+    timeSlots: TimeSlot[]
+    taskParts: TaskPart[]
+    slotUnavailable: boolean[]
 
-export type {TimeInDay, EventTask}
-export {compareTimeInDay}
+    postpone(index: number) {
+        this.slotUnavailable[index] = true
+    }
+
+    getTasks() {
+        let tasks: EventTask[] = []
+        const m = this.timeSlots.length, n = this.taskParts.length
+        let curSlotIndex = 0, curUsedMinute = 0
+        for (let i = 0; i < n; i++) {
+            const part = this.taskParts[i]
+            if (!this.slotUnavailable[curSlotIndex] || this.timeSlots[curSlotIndex].period() - curUsedMinute < part.period) {
+                while (curSlotIndex < m && !this.slotUnavailable[curSlotIndex] && this.timeSlots[curSlotIndex].period() < part.period) {
+                    ++curSlotIndex
+                }
+                if (curSlotIndex === m) {
+                    break
+                }
+                curUsedMinute = 0
+            }
+            const slot = this.timeSlots[curSlotIndex]
+            const startMinute = slot.start.hour * 60 + slot.start.minute + curUsedMinute
+            tasks.push({
+                date: slot.date,
+                title: part.name,
+                priority: 0,
+                start: {
+                    hour: startMinute / 60,
+                    minute: startMinute % 60
+                },
+                end: {
+                    hour: (startMinute + part.period) / 60,
+                    minute: (startMinute + part.period) % 60
+                }
+            })
+            curUsedMinute += part.period
+        }
+
+        return tasks
+    }
+
+
+    constructor(timeSlots: TimeSlot[], taskParts: TaskPart[]) {
+        this.timeSlots = timeSlots;
+        this.taskParts = taskParts;
+        this.slotUnavailable = []
+    }
+}
+
+const createDateStampFromMoment = (m: moment.Moment): DateStamp => {
+    return {
+        year: m.year(),
+        month: m.month(),
+        day: m.daysInMonth()
+    }
+}
+
+
+export type {DateStamp, TimeInDay, EventTask}
+export {compareTimeInDay, createDateStampFromMoment}
