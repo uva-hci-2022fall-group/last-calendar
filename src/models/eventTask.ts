@@ -45,6 +45,16 @@ type TaskPart = {
 }
 
 
+type RepeatedEvent = {
+    title: string
+    daysOfWeek: string[]
+    start: TimeInDay
+    end: TimeInDay
+    startDate: DateStamp
+    endDate: DateStamp
+}
+
+
 const compareTimeInDay = (a: TimeInDay, b: TimeInDay) => {
     const minuteA = a.hour * 60 + a.minute
     const minuteB = b.hour * 60 + b.minute
@@ -115,5 +125,5 @@ const createDateStampFromMoment = (m: moment.Moment): DateStamp => {
 }
 
 
-export type {DateStamp, TimeInDay, EventTask, TaskPart}
+export type {DateStamp, TimeInDay, EventTask, TaskPart, RepeatedEvent}
 export {compareTimeInDay, createDateStampFromMoment, TimeSlot}
