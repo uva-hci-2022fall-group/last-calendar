@@ -24,6 +24,11 @@ class TimeSlot {
     period() {
         return (this.end.hour - this.start.hour) * 60 + (this.end.minute - this.start.minute)
     }
+
+    format() {
+        const {year, month, day} = this.date
+        return `${year}.${month}.${day} (${this.start.hour}:${this.start.minute} - ${this.end.hour}:${this.end.minute})`
+    }
 }
 
 type EventTask = {
@@ -47,6 +52,7 @@ const compareTimeInDay = (a: TimeInDay, b: TimeInDay) => {
 }
 
 class FlexibleEvent {
+    title: string
     timeSlots: TimeSlot[]
     taskParts: TaskPart[]
     slotUnavailable: boolean[]
@@ -92,7 +98,8 @@ class FlexibleEvent {
     }
 
 
-    constructor(timeSlots: TimeSlot[], taskParts: TaskPart[]) {
+    constructor(title: string, timeSlots: TimeSlot[], taskParts: TaskPart[]) {
+        this.title = title
         this.timeSlots = timeSlots;
         this.taskParts = taskParts;
         this.slotUnavailable = []
@@ -102,11 +109,11 @@ class FlexibleEvent {
 const createDateStampFromMoment = (m: moment.Moment): DateStamp => {
     return {
         year: m.year(),
-        month: m.month(),
-        day: m.daysInMonth()
+        month: m.month() + 1,
+        day: m.date()
     }
 }
 
 
-export type {DateStamp, TimeInDay, EventTask}
-export {compareTimeInDay, createDateStampFromMoment}
+export type {DateStamp, TimeInDay, EventTask, TaskPart}
+export {compareTimeInDay, createDateStampFromMoment, TimeSlot}
