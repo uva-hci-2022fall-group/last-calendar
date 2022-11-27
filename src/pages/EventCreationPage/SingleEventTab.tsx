@@ -1,10 +1,12 @@
-import {useState} from "react";
-import {createDateStampFromMoment, DateStamp, TimeInDay} from "../../models/eventTask";
+import {useContext, useState} from "react";
+import {createDateStampFromMoment, DateStamp, EventTask, TimeInDay} from "../../models/eventTask";
 import {Button, DatePicker, Form, Input, InputNumber} from "antd";
 import moment from "moment";
+import {SingleEventsContext} from "../../contexts/SingleEventsContext";
 
 
 const SingleEventTab = () => {
+    const {singleEvents, setSingleEvents} = useContext(SingleEventsContext)
     const [label, setLabel] = useState("")
     const [date, setDate] = useState<DateStamp>({
         year: 2022,
@@ -21,7 +23,14 @@ const SingleEventTab = () => {
     })
 
     const onAdd = () => {
-
+        const event: EventTask = {
+            priority: 0,
+            date: date,
+            start: start,
+            end: end,
+            title: label
+        }
+        setSingleEvents([...singleEvents, event])
     }
 
     return (
@@ -66,7 +75,7 @@ const SingleEventTab = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
-                <Button type="primary">
+                <Button type="primary" onClick={onAdd}>
                     Add
                 </Button>
             </Form.Item>

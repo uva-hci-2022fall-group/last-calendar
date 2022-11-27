@@ -1,7 +1,15 @@
 import {Button, DatePicker, Form, Input, InputNumber, Tag} from "antd";
-import {createDateStampFromMoment, DateStamp, TimeInDay, TimeSlot, TaskPart} from "../../models/eventTask";
+import {
+    createDateStampFromMoment,
+    DateStamp,
+    TimeInDay,
+    TimeSlot,
+    TaskPart,
+    FlexibleEvent
+} from "../../models/eventTask";
 import moment from "moment";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {MultipleEventsContext} from "../../contexts/MultipleEventsContext";
 
 const MultipleEventTab = () => {
     const [label, setLabel] = useState("")
@@ -24,8 +32,10 @@ const MultipleEventTab = () => {
     const [taskLabel, setTaskLabel] = useState("")
     const [taskPeriod, setTaskPeriod] = useState(10)
 
+    const {multipleEvents, setMultipleEvents} = useContext(MultipleEventsContext)
     const onAddEvent = () => {
-
+        const event: FlexibleEvent = new FlexibleEvent(label, slots, taskParts)
+        setMultipleEvents([...multipleEvents, event])
     }
 
     const addSlot = () => {

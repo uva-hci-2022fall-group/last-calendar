@@ -1,6 +1,7 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {createDateStampFromMoment, DateStamp, RepeatedEvent, TimeInDay} from "../../models/eventTask";
 import {Button, DatePicker, Form, Input, InputNumber, Select, SelectProps} from "antd";
+import {RepeatedEventsContext} from "../../contexts/RepeatedEventsContext";
 
 const {RangePicker} = DatePicker
 
@@ -39,6 +40,7 @@ const RepetitiveRoutineTab = () => {
 
     const [daysInWeek, setDaysInWeek] = useState<string[]>([])
 
+    const {repeatedEvents, setRepeatedEvents} = useContext(RepeatedEventsContext)
     const onAdd = () => {
         const event: RepeatedEvent = {
             title: label,
@@ -48,6 +50,7 @@ const RepetitiveRoutineTab = () => {
             endDate: endDate,
             daysOfWeek: daysInWeek
         }
+        setRepeatedEvents([...repeatedEvents, event])
     }
 
     return (
