@@ -124,6 +124,10 @@ const createDateStampFromMoment = (m: moment.Moment): DateStamp => {
     }
 }
 
+type LongTermPlan = {
 
-export type {DateStamp, TimeInDay, EventTask, TaskPart, RepeatedEvent}
-export {compareTimeInDay, createDateStampFromMoment, TimeSlot}
+}
+
+
+export type {DateStamp, TimeInDay, EventTask, TaskPart, RepeatedEvent, LongTermPlan}
+export {compareTimeInDay, createDateStampFromMoment, TimeSlot, FlexibleEvent}
