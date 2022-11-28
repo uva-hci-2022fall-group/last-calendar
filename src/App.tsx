@@ -33,11 +33,11 @@ const Router = () => {
                     <Routes>
                         <Route path={"/"} element={<MainPage/>}/>
                         <Route path={"/new"} element={<EventCreationPage/>}/>
+                        <Route path={"/day"} element={<DayViewPage/>}/>
                     </Routes>
                 </Content>
             </Layout>
         </BrowserRouter>
-
     )
 }
 
@@ -49,11 +49,9 @@ const App = () => {
     const [multipleEvents, setMultipleEvents] = useState<FlexibleEvent[]>([])
     return (
         <LongTermPlansContext.Provider value={{longTermPlans: longTermPlans, setLongTermPlans: setLongTermPlans}}>
-            <RepeatedEventsContext.Provider
-                value={{repeatedEvents: repeatedEvents, setRepeatedEvents: setRepeatedEvents}}>
+            <RepeatedEventsContext.Provider value={{repeatedEvents: repeatedEvents, setRepeatedEvents: setRepeatedEvents}}>
                 <SingleEventsContext.Provider value={{singleEvents: singleEvents, setSingleEvents: setSingleEvents}}>
-                    <MultipleEventsContext.Provider
-                        value={{multipleEvents: multipleEvents, setMultipleEvents: setMultipleEvents}}>
+                    <MultipleEventsContext.Provider value={{multipleEvents: multipleEvents, setMultipleEvents: setMultipleEvents}}>
                         <Router/>
                     </MultipleEventsContext.Provider>
                 </SingleEventsContext.Provider>
