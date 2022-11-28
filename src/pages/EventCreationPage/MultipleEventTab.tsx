@@ -33,8 +33,9 @@ const MultipleEventTab = () => {
     const [taskPeriod, setTaskPeriod] = useState(10)
 
     const {multipleEvents, setMultipleEvents} = useContext(MultipleEventsContext)
+    const [priority, setPriority] = useState(1)
     const onAddEvent = () => {
-        const event: FlexibleEvent = new FlexibleEvent(label, slots, taskParts)
+        const event: FlexibleEvent = new FlexibleEvent(label, priority, slots, taskParts)
         setMultipleEvents([...multipleEvents, event])
     }
 
@@ -71,6 +72,13 @@ const MultipleEventTab = () => {
                 label="label"
             >
                 <Input value={label} onChange={e => setLabel(e.target.value)} style={{width: 400}}/>
+            </Form.Item>
+
+            <Form.Item
+                label="Priority"
+            >
+                <InputNumber addonBefore="low(1)" addonAfter={"high(5)"} value={priority}
+                             onChange={e => setPriority(e ?? 1)} min={1} max={5}/>
             </Form.Item>
 
             <Form.Item

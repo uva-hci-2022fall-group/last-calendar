@@ -31,7 +31,7 @@ class TimeSlot {
     }
 }
 
-type EventTask = {
+interface EventTask extends Prioritized {
     title: string
     priority: number
     date?: DateStamp
@@ -44,8 +44,11 @@ type TaskPart = {
     period: number
 }
 
+interface Prioritized {
+    priority: number
+}
 
-type RepeatedEvent = {
+interface RepeatedEvent extends Prioritized{
     title: string
     daysOfWeek: string[]
     start: TimeInDay
@@ -61,11 +64,12 @@ const compareTimeInDay = (a: TimeInDay, b: TimeInDay) => {
     return minuteB - minuteA
 }
 
-class FlexibleEvent {
+class FlexibleEvent implements Prioritized{
     title: string
     timeSlots: TimeSlot[]
     taskParts: TaskPart[]
     slotUnavailable: boolean[]
+    priority: number
 
     postpone(index: number) {
         this.slotUnavailable[index] = true
@@ -108,7 +112,8 @@ class FlexibleEvent {
     }
 
 
-    constructor(title: string, timeSlots: TimeSlot[], taskParts: TaskPart[]) {
+    constructor(title: string, priority: number, timeSlots: TimeSlot[], taskParts: TaskPart[]) {
+        this.priority = priority
         this.title = title
         this.timeSlots = timeSlots;
         this.taskParts = taskParts;

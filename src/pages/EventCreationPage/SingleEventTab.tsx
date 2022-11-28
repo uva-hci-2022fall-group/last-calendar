@@ -21,10 +21,11 @@ const SingleEventTab = () => {
         hour: 11,
         minute: 0
     })
+    const [priority, setPriority] = useState(1)
 
     const onAdd = () => {
         const event: EventTask = {
-            priority: 0,
+            priority: priority,
             date: date,
             start: start,
             end: end,
@@ -72,6 +73,13 @@ const SingleEventTab = () => {
                              onChange={e => setEnd({hour: e ?? end.hour, minute: end.minute})} min={0}
                              max={23}/>
                 <InputNumber addonBefore={"min"} defaultValue={0} min={0} max={59} style={{marginLeft: 10}}/>
+            </Form.Item>
+
+            <Form.Item
+                label="Priority"
+            >
+                <InputNumber addonBefore="low(1)" addonAfter={"high(5)"} value={priority}
+                             onChange={e => setPriority(e ?? 1)} min={1} max={5}/>
             </Form.Item>
 
             <Form.Item wrapperCol={{offset: 8, span: 16}}>

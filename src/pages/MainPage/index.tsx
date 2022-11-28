@@ -29,7 +29,8 @@ const rEvent: RepeatedEvent = {
         day: 28
     },
     daysOfWeek: ['1', '3', '5'],
-    title: "Dick"
+    title: "Dick",
+    priority: 1
 }
 
 const MainCalendar = () => {

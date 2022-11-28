@@ -39,8 +39,8 @@ const RepetitiveRoutineTab = () => {
     })
 
     const [daysInWeek, setDaysInWeek] = useState<string[]>([])
-
     const {repeatedEvents, setRepeatedEvents} = useContext(RepeatedEventsContext)
+    const [priority, setPriority] = useState(1)
     const onAdd = () => {
         const event: RepeatedEvent = {
             title: label,
@@ -48,7 +48,8 @@ const RepetitiveRoutineTab = () => {
             end: end,
             startDate: startDate,
             endDate: endDate,
-            daysOfWeek: daysInWeek
+            daysOfWeek: daysInWeek,
+            priority: priority
         }
         setRepeatedEvents([...repeatedEvents, event])
     }
@@ -119,6 +120,13 @@ const RepetitiveRoutineTab = () => {
                 <InputNumber addonBefore={"min"} defaultValue={end.minute} min={0}
                              onChange={e => setEnd({hour: end.hour, minute: e ?? end.minute})}
                              max={59} style={{marginLeft: 10}}/>
+            </Form.Item>
+
+            <Form.Item
+                label="Priority"
+            >
+                <InputNumber addonBefore="low(1)" addonAfter={"high(5)"} value={priority}
+                             onChange={e => setPriority(e ?? 1)} min={1} max={5}/>
             </Form.Item>
 
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
