@@ -18,7 +18,6 @@ const TaskList = (props: {
             <Row style={{marginTop: 10}}>
                 <Col span={12}>
                     <Radio.Group value={sort} onChange={e => {
-                        console.log("changed")
                         setSort(e.target.value)
                     }}>
                         <Radio.Button value={'asc'}>asc</Radio.Button>

@@ -6,33 +6,9 @@ import {useContext} from "react";
 import {MultipleEventsContext} from "../../contexts/MultipleEventsContext";
 import {RepeatedEventsContext} from "../../contexts/RepeatedEventsContext";
 import {SingleEventsContext} from "../../contexts/SingleEventsContext";
-
-const demoEvents: EventTask[] = [
-    {
-        title: "Jerk off",
-        priority: 1,
-        start: {
-            hour: 10,
-            minute: 0
-        },
-        end: {
-            hour: 11,
-            minute: 0
-        }
-    },
-    {
-        title: "Watch porn",
-        priority: 2,
-        start: {
-            hour: 12,
-            minute: 0
-        },
-        end: {
-            hour: 13,
-            minute: 0
-        }
-    }
-]
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from '@fullcalendar/daygrid'
+import {parseRepeatedEvent, parseSingleEvent} from "../../models/eventParse"; // a plugin!
 
 
 const DayViewPage = () => {
@@ -52,8 +28,14 @@ const DayViewPage = () => {
     ].filter(e => dateStampEquals(e.date!, targetDate))
     return (
         <Row>
-            <Col span={12}>
-                <div>left</div>
+            <Col span={12} style={{margin: 10}}>
+                <FullCalendar
+                    plugins={[dayGridPlugin]}
+                    initialView="dayGridDay"
+                    events={[...singleEvents.map(e => parseSingleEvent(e)),
+                        ...repeatedEvents.map(e => parseRepeatedEvent(e))]}
+                    initialDate={new Date(`${year}-${month}-${day}`)}
+                />
             </Col>
             <Col span={10}>
                 <TaskList events={events}/>

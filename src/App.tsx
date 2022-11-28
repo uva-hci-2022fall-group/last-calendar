@@ -12,6 +12,67 @@ import MainPage from "./pages/MainPage";
 
 const {Header, Content, Footer} = Layout
 
+const rEvent: RepeatedEvent = {
+    start: {
+        hour: 10,
+        minute: 0
+    },
+    end: {
+        hour: 11,
+        minute: 0
+    },
+    startDate: {
+        year: 2022,
+        month: 11,
+        day: 1
+    },
+    endDate: {
+        year: 2022,
+        month: 11,
+        day: 28
+    },
+    daysOfWeek: ['1', '3', '5'],
+    title: "Dick",
+    priority: 1
+}
+
+const demoSingleEvents: EventTask[] = [
+    {
+        title: "Jerk off",
+        priority: 2,
+        start: {
+            hour: 10,
+            minute: 0
+        },
+        end: {
+            hour: 11,
+            minute: 0
+        },
+        date: {
+            year: 2022,
+            month: 11,
+            day: 2
+        }
+    },
+    {
+        title: "Watch porn",
+        priority: 2,
+        start: {
+            hour: 12,
+            minute: 0
+        },
+        end: {
+            hour: 13,
+            minute: 0
+        },
+        date: {
+            year: 2022,
+            month: 11,
+            day: 3
+        }
+    }
+]
+
 const Router = () => {
     const items: MenuProps['items'] = [
         {
@@ -44,8 +105,8 @@ const Router = () => {
 
 const App = () => {
     const [longTermPlans, setLongTermPlans] = useState<LongTermPlan[]>([])
-    const [repeatedEvents, setRepeatedEvents] = useState<RepeatedEvent[]>([])
-    const [singleEvents, setSingleEvents] = useState<EventTask[]>([])
+    const [repeatedEvents, setRepeatedEvents] = useState<RepeatedEvent[]>([rEvent])
+    const [singleEvents, setSingleEvents] = useState<EventTask[]>(demoSingleEvents)
     const [multipleEvents, setMultipleEvents] = useState<FlexibleEvent[]>([])
     return (
         <LongTermPlansContext.Provider value={{longTermPlans: longTermPlans, setLongTermPlans: setLongTermPlans}}>

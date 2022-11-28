@@ -8,30 +8,8 @@ import {parseRepeatedEvent, parseSingleEvent} from "../../models/eventParse";
 import {SingleEventsContext} from "../../contexts/SingleEventsContext";
 import {RepeatedEventsContext} from "../../contexts/RepeatedEventsContext";
 import {MultipleEventsContext} from "../../contexts/MultipleEventsContext";
+import {useNavigate, useNavigation} from "react-router-dom";
 
-const rEvent: RepeatedEvent = {
-    start: {
-        hour: 10,
-        minute: 0
-    },
-    end: {
-        hour: 11,
-        minute: 0
-    },
-    startDate: {
-        year: 2022,
-        month: 11,
-        day: 1
-    },
-    endDate: {
-        year: 2022,
-        month: 11,
-        day: 28
-    },
-    daysOfWeek: ['1', '3', '5'],
-    title: "Dick",
-    priority: 1
-}
 
 const MainCalendar = () => {
     const {singleEvents} = useContext(SingleEventsContext)
@@ -41,33 +19,19 @@ const MainCalendar = () => {
         ...singleEvents.map(e => parseSingleEvent(e)),
         ...repeatedEvents.map(e => parseRepeatedEvent(e))
     ]
+    const navigate = useNavigate()
     return (
         <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
             initialView="dayGridMonth"
             headerToolbar={{right: 'dayGridMonth,timeGridWeek,listWeek', left: 'prev,next today', center: 'title'}}
-            events={[
-                {
-                    title: "The title 1",
-                    start: "2022-11-01T10:00:00",
-                    end: "2022-11-01T11:00:00"
-                },
-                {
-                    title: "The title 3",
-                    start: "2022-11-01T13:00:00",
-                    end: "2022-11-01T14:00:00"
-                },
-                {
-                    title: "The title 2",
-                    start: "2022-11-02",
-                    end: "2022-11-02"
-                },
-                parseRepeatedEvent(rEvent),
-                ...events
-            ]}
+            events={events}
             eventClick={info => {
-                console.log(info.event.start);
-                console.log(info.event.end);
+                const date = info.event.start!
+                const year = date.getUTCFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+                navigate(`/day/${year}/${month}/${day}`)
             }}
         />
     )

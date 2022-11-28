@@ -135,14 +135,23 @@ const startOfWeek = (date: Date): Date => {
 
 }
 
+const millSecondsInADay = 24 * 60 * 60 * 1000
+const millSecondsInAWeek = millSecondsInADay * 7
+
 const getTasksFromRepeatedEvent = (event: RepeatedEvent): EventTask[] => {
     const {startDate, endDate} = event
-    const startTime = startOfWeek(new Date(`${startDate.year}-${startDate.month - 1}-${startDate.day}`)).getTime()
-    const endTime = new Date(`${endDate.year}-${endDate.month - 1}-${endDate.day}`).getTime()
+    const startTime = startOfWeek(new Date(`${startDate.year}-${startDate.month}-${startDate.day}`)).getTime() + millSecondsInADay / 2
+    const endTime = new Date(`${endDate.year}-${endDate.month}-${endDate.day}`).getTime()
     let results: EventTask[] = []
-    const millSecondsInWeek = event.daysOfWeek.map(s => parseInt(s) * 24 * 60 * 1000)
+    const millSecondsInWeek = event.daysOfWeek.map(s => (parseInt(s) - 1) * millSecondsInADay)
     let cur = startTime
     const n = millSecondsInWeek.length
+    console.log(new Date(startTime))
+    console.log(new Date(endTime))
+    console.log(`${startTime} ${endTime} ${n}`)
+    console.log(millSecondsInWeek)
+
+
     while (cur < endTime) {
         for (let i = 0; i < n; i++) {
             const time = cur + millSecondsInWeek[i]
@@ -162,8 +171,10 @@ const getTasksFromRepeatedEvent = (event: RepeatedEvent): EventTask[] => {
                 })
             }
         }
-        cur += 7 * 24 * 60 * 1000
+        cur += millSecondsInAWeek
+        console.log(cur)
     }
+    console.log(results)
     return results
 }
 
