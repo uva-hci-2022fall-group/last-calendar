@@ -65,6 +65,10 @@ const MainCalendar = () => {
                 parseRepeatedEvent(rEvent),
                 ...events
             ]}
+            eventClick={info => {
+                console.log(info.event.start);
+                console.log(info.event.end);
+            }}
         />
     )
 }

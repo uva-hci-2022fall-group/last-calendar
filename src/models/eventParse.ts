@@ -34,5 +34,4 @@ const parseRepeatedEvent = (event: RepeatedEvent): EventInput => {
     return result
 }
 
-
 export {parseRepeatedEvent, parseSingleEvent}

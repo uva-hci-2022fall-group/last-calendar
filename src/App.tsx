@@ -33,7 +33,7 @@ const Router = () => {
                     <Routes>
                         <Route path={"/"} element={<MainPage/>}/>
                         <Route path={"/new"} element={<EventCreationPage/>}/>
-                        <Route path={"/day"} element={<DayViewPage/>}/>
+                        <Route path={"/day/:year/:month/:day"} element={<DayViewPage/>}/>
                     </Routes>
                 </Content>
             </Layout>

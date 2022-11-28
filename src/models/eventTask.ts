@@ -95,7 +95,7 @@ class FlexibleEvent implements Prioritized{
             tasks.push({
                 date: slot.date,
                 title: part.name,
-                priority: 0,
+                priority: this.priority,
                 start: {
                     hour: startMinute / 60,
                     minute: startMinute % 60
@@ -129,10 +129,51 @@ const createDateStampFromMoment = (m: moment.Moment): DateStamp => {
     }
 }
 
+const startOfWeek = (date: Date): Date => {
+    const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+    return new Date(date.setDate(diff));
+
+}
+
+const getTasksFromRepeatedEvent = (event: RepeatedEvent): EventTask[] => {
+    const {startDate, endDate} = event
+    const startTime = startOfWeek(new Date(`${startDate.year}-${startDate.month}-${startDate.day}`)).getTime()
+    const endTime = new Date(`${endDate.year}-${endDate.month}-${endDate.day}`).getTime()
+    let results: EventTask[] = []
+    const millSecondsInWeek = event.daysOfWeek.map(s => parseInt(s) * 24 * 60 * 1000)
+    let cur = startTime
+    const n = millSecondsInWeek.length
+    while (cur < endTime) {
+        for (let i = 0; i < n; i++) {
+            const time = cur + millSecondsInWeek[i]
+            if (time > startTime && time < endTime) {
+                const dateStamp: DateStamp = {
+                    year: 0,
+                    month: 0,
+                    day: 0
+                }
+                results.push({
+                    start: event.start,
+                    end: event.end,
+                    date: dateStamp,
+                    title: event.title,
+                    priority: event.priority
+                })
+            }
+        }
+        cur += 7 * 24 * 60 * 1000
+    }
+    return results
+}
+
+const dateStampEquals = (a: DateStamp, b: DateStamp): boolean => {
+    return a.year === b.year && a.month === b.month && a.day === b.day
+}
+
 type LongTermPlan = {
 
 }
 
 
 export type {DateStamp, TimeInDay, EventTask, TaskPart, RepeatedEvent, LongTermPlan}
-export {compareTimeInDay, createDateStampFromMoment, TimeSlot, FlexibleEvent}
+export {compareTimeInDay, createDateStampFromMoment, TimeSlot, FlexibleEvent, getTasksFromRepeatedEvent, dateStampEquals}
