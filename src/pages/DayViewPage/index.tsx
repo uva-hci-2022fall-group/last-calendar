@@ -8,6 +8,7 @@ import {RepeatedEventsContext} from "../../contexts/RepeatedEventsContext";
 import {SingleEventsContext} from "../../contexts/SingleEventsContext";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid';
 import {parseRepeatedEvent, parseSingleEvent} from "../../models/eventParse"; // a plugin!
 
 
@@ -30,8 +31,8 @@ const DayViewPage = () => {
         <Row>
             <Col span={12} style={{margin: 10}}>
                 <FullCalendar
-                    plugins={[dayGridPlugin]}
-                    initialView="dayGridDay"
+                    plugins={[timeGridPlugin]}
+                    initialView="timeGridDay"
                     events={[...singleEvents.map(e => parseSingleEvent(e)),
                         ...repeatedEvents.map(e => parseRepeatedEvent(e))]}
                     initialDate={new Date(`${year}-${month}-${day}`)}
