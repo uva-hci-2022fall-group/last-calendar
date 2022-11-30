@@ -32,13 +32,13 @@ const rEvent: RepeatedEvent = {
         day: 28
     },
     daysOfWeek: ['1', '3', '5'],
-    title: "Dick",
+    title: "homework",
     priority: 1
 }
 
 const demoSingleEvents: EventTask[] = [
     {
-        title: "Jerk off",
+        title: "meeting 1",
         priority: 2,
         start: {
             hour: 10,
@@ -55,7 +55,7 @@ const demoSingleEvents: EventTask[] = [
         }
     },
     {
-        title: "Watch porn",
+        title: "meeting 2",
         priority: 2,
         start: {
             hour: 12,
