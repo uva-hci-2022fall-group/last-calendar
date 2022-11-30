@@ -1,14 +1,17 @@
 import React, {useContext} from "react";
+
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+
 import {RepeatedEvent} from "../../models/eventTask";
 import {parseRepeatedEvent, parseSingleEvent} from "../../models/eventParse";
 import {SingleEventsContext} from "../../contexts/SingleEventsContext";
 import {RepeatedEventsContext} from "../../contexts/RepeatedEventsContext";
 import {MultipleEventsContext} from "../../contexts/MultipleEventsContext";
 import {useNavigate, useNavigation} from "react-router-dom";
+
 
 
 const MainCalendar = () => {
