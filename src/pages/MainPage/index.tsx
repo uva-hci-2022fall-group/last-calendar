@@ -33,7 +33,7 @@ const MainCalendar = () => {
                 const date = info.event.start!
                 const year = date.getUTCFullYear()
                 const month = date.getMonth() + 1
-                const day = date.getDate()
+                const day = date.getUTCDate()
                 navigate(`/day/${year}/${month}/${day}`)
             }}
         />
