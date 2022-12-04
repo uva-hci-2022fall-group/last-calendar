@@ -29,9 +29,9 @@ const TimeLineItem = (props: TimeLineItemProps) => {
 
 const colors = ["orange", "red", "green", "blue", "pink"]
 
-const parseSubEvents = (subEvents: SubEvent[], endDate: DateStamp): TimeLineItemProps[] => {
+const parseSubEvents = (subEvents: SubEvent[], startDate: DateStamp, endDate: DateStamp): TimeLineItemProps[] => {
     let results: TimeLineItemProps[] = []
-    const beginTime = new Date("2022-12-1").getTime()
+    const beginTime = new Date(`${startDate.year}-${startDate.month}-${startDate.day}`).getTime()
     const endTime = new Date(`${endDate.year}-${endDate.month}-${endDate.day}`).getTime()
     console.log(beginTime)
     console.log(endTime)
@@ -61,10 +61,15 @@ const parseSubEvents = (subEvents: SubEvent[], endDate: DateStamp): TimeLineItem
 
 const TimeLine = () => {
     const [finaleEventLabel, setFinalEventLabel] = useState("jerk off")
-    const [date, setDate] = useState<DateStamp>({
+    const [endDate, setEndDate] = useState<DateStamp>({
         year: 2022,
         month: 12,
         day: 15
+    })
+    const [startDate, setStartDate] = useState<DateStamp>({
+        year: 2022,
+        month: 12,
+        day: 1
     })
     const [newTaskLabel, setNewTaskLabel] = useState("")
     const [newTaskDate, setNewTaskDate] = useState<DateStamp>({
@@ -111,7 +116,7 @@ const TimeLine = () => {
         setSubEvents([...subEvents.slice(0, index), ...subEvents.slice(index + 1)])
     }
 
-    const items = parseSubEvents(subEvents, date)
+    const items = parseSubEvents(subEvents, startDate, endDate)
     return (
         <>
             <Form
@@ -122,17 +127,27 @@ const TimeLine = () => {
                 autoComplete="off"
             >
                 <Form.Item
-                    label="final event"
+                    label="event"
                 >
                     <Input value={finaleEventLabel} onChange={e => setFinalEventLabel(e.target.value)}/>
                 </Form.Item>
 
                 <Form.Item
+                    label="start date"
+                >
+                    <DatePicker style={{width: 400}} onChange={e => {
+                        if (e !== null) {
+                            setStartDate(createDateStampFromMoment(e))
+                        }
+                    }} defaultValue={moment("2022-12-1")}/>
+                </Form.Item>
+                
+                <Form.Item
                     label="final date"
                 >
                     <DatePicker style={{width: 400}} onChange={e => {
                         if (e !== null) {
-                            setDate(createDateStampFromMoment(e))
+                            setEndDate(createDateStampFromMoment(e))
                         }
                     }} defaultValue={moment("2022-12-15")}/>
                 </Form.Item>
@@ -193,7 +208,7 @@ const TimeLine = () => {
                                                              key={"item_" + index}/>)
                 }
                 <div className={styles.finalLabel}>{finaleEventLabel}</div>
-                <div className={styles.finalDate}>{`${date.month}.${date.day}`}</div>
+                <div className={styles.finalDate}>{`${endDate.month}.${endDate.day}`}</div>
             </div>
         </>
 
