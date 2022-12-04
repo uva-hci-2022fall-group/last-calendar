@@ -27,37 +27,6 @@ const TimeLineItem = (props: TimeLineItemProps) => {
     )
 }
 
-const items: TimeLineItemProps[] = [
-    {
-        label: "jav",
-        date: "12.2",
-        color: "orange",
-        width: 50,
-        left: 20
-    },
-    {
-        label: "b",
-        date: "12.5",
-        color: "red",
-        width: 150,
-        left: 70
-    },
-    {
-        label: "c",
-        date: "12.7",
-        color: "green",
-        width: 120,
-        left: 220
-    },
-    {
-        label: "d",
-        date: "12.10",
-        color: "blue",
-        width: 80,
-        left: 340
-    }
-]
-
 const colors = ["orange", "red", "green", "blue", "pink"]
 
 const parseSubEvents = (subEvents: SubEvent[], endDate: DateStamp): TimeLineItemProps[] => {
@@ -137,6 +106,12 @@ const TimeLine = () => {
             },
         }
     ])
+
+    const deleteEvent = (index: number) => {
+        setSubEvents([...subEvents.slice(0, index), ...subEvents.slice(index + 1)])
+    }
+
+    const items = parseSubEvents(subEvents, date)
     return (
         <>
             <Form
@@ -171,7 +146,13 @@ const TimeLine = () => {
                         dataSource={items}
                         renderItem={(item, index) => (
                             <List.Item>
-                                {index + 1}. {item.label} till {item.date}
+                                <div className={styles.itemContainer}>
+                                    <div>{index + 1}. {item.label} till {item.date}</div>
+                                    <div/>
+                                    <Button onClick={() => deleteEvent(index)}>delete</Button>
+
+                                </div>
+
                             </List.Item>
                         )}
                     />
@@ -207,7 +188,7 @@ const TimeLine = () => {
             <div className={styles.timeLineContainer}>
                 <div className={styles.axis}/>
                 {
-                    parseSubEvents(subEvents, date).map((item, index) => <TimeLineItem label={item.label} date={item.date} color={item.color}
+                    items.map((item, index) => <TimeLineItem label={item.label} date={item.date} color={item.color}
                                                              width={item.width} left={item.left}
                                                              key={"item_" + index}/>)
                 }
