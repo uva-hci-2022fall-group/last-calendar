@@ -10,8 +10,8 @@ const TaskList = (props: {
     const [sortedTasks, setSortedTasks] = useState<EventTask[]>(events)
     const [sort, setSort] = useState<'asc' | 'desc'>('asc')
     useEffect(() => {
-        const sign = sort === 'asc' ? 1 : -1
-        setSortedTasks(sortedTasks.sort((a, b) => sign * compareTimeInDay(a.start, b.start)))
+        const sign = sort === 'asc' ? -1 : 1
+        setSortedTasks(sortedTasks.sort((a, b) => sign * (a.priority - b.priority)))
     }, [sort, sortedTasks])
     return (
         <>
