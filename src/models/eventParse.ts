@@ -1,5 +1,6 @@
 import {DateStamp, EventTask, RepeatedEvent, TimeInDay} from "./eventTask";
 import {EventInput, EventSourceInput} from "@fullcalendar/react";
+import {backgroundColors, cellBackgroundColors, priorityColor, textColors} from "../themes";
 
 const dateToString = (date: DateStamp): string => {
     const month = date.month < 10 ? `0${date.month}` : `${date.month}`
@@ -20,7 +21,9 @@ const parseSingleEvent = (event: EventTask): EventInput => {
     const result: EventInput = {
         start: dateTimeToString(event.date!, event.start),
         end: dateTimeToString(event.date!, event.end),
-        title: event.title
+        title: event.title,
+        textColor: textColors[event.priority],
+        color: cellBackgroundColors[event.priority]
     }
     return result
 }
@@ -32,7 +35,9 @@ const parseRepeatedEvent = (event: RepeatedEvent): EventInput => {
         endRecur: dateToString(event.endDate),
         startTime: timeToString(event.start),
         endTime: timeToString(event.end),
-        daysOfWeek: event.daysOfWeek
+        daysOfWeek: event.daysOfWeek,
+        textColor: textColors[event.priority],
+        color: cellBackgroundColors[event.priority]
     }
     return result
 }

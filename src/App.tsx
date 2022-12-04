@@ -39,13 +39,13 @@ const rEvent: RepeatedEvent = {
 const demoSingleEvents: EventTask[] = [
     {
         title: "meeting 1",
-        priority: 2,
+        priority: 1,
         start: {
-            hour: 10,
+            hour: 11,
             minute: 0
         },
         end: {
-            hour: 11,
+            hour: 12,
             minute: 0
         },
         date: {
@@ -69,6 +69,23 @@ const demoSingleEvents: EventTask[] = [
             year: 2022,
             month: 11,
             day: 3
+        }
+    },
+    {
+        title: "meeting 3",
+        priority: 3,
+        start: {
+            hour: 12,
+            minute: 30
+        },
+        end: {
+            hour: 13,
+            minute: 30
+        },
+        date: {
+            year: 2022,
+            month: 11,
+            day: 2
         }
     }
 ]
