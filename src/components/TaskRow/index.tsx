@@ -1,7 +1,5 @@
 import {EventTask} from "../../models/eventTask";
 import {Badge, Card} from 'antd'
-import {useState} from "react";
-import styles from './index.module.css'
 
 
 import {priorityText, priorityColor, backgroundColors, textColors} from '../../themes'
@@ -13,7 +11,7 @@ const TaskRow = (props: {
 
     return (
         <>
-            <Badge.Ribbon text={priorityText[priority]} color={priorityColor[priority]}>
+            <Badge.Ribbon text={<div style={{color: "black"}}>{priorityText[priority]}</div>} color={priorityColor[priority]} >
                 <Card title={<div style={{color: textColors[priority], fontSize: 20}}>{title}</div>} size="small"
                       style={{width: 500, backgroundColor: backgroundColors[priority], color: textColors[priority]}}>
                     {

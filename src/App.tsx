@@ -87,6 +87,23 @@ const demoSingleEvents: EventTask[] = [
             month: 11,
             day: 2
         }
+    },
+    {
+        title: "long term",
+        priority: 0,
+        start: {
+            hour: 14,
+            minute: 30
+        },
+        end: {
+            hour: 15,
+            minute: 30
+        },
+        date: {
+            year: 2022,
+            month: 11,
+            day: 2
+        }
     }
 ]
 

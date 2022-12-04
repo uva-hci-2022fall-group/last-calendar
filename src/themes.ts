@@ -1,23 +1,23 @@
 const priorityColor = [
-    "rgba(255, 0, 0, 0.2)",
-    "rgba(255, 0, 0, 0.4)",
-    "rgba(255, 0, 0, 0.6)",
-    "rgba(255, 0, 0, 0.8)"
+    "rgba(0, 255, 0, 0.5)",
+    "rgba(114, 293, 64, 1)",
+    "rgba(0, 255, 255, 1)",
+    "rgba(255, 0, 0, 1)"
 ]
-const priorityText = ["normal", "important", "warning", "critical"]
+const priorityText = ["long term", "normal", "important", "warning"]
 
 const backgroundColors = [
     "rgba(255, 255, 255, 0.2)",
-    "rgba(255, 255, 255, 0.4)",
-    "rgba(255, 255, 255, 0.6)",
-    "rgba(255, 255, 255, 0.8)"
+    "rgba(255, 255, 255, 1)",
+    "rgba(255, 255, 255, 1)",
+    "rgba(255, 255, 255, 1)"
 ]
 
 const textColors = [
     "rgba(0, 0, 0, 0.2)",
-    "rgba(0, 0, 0, 0.4)",
-    "rgba(0, 0, 0, 0.6)",
-    "rgba(0, 0, 0, 0.8)"
+    "rgba(0, 0, 0, 1)",
+    "rgba(0, 0, 0, 1)",
+    "rgba(0, 0, 0, 1)"
 ]
 
 const cellBackgroundColors = [
