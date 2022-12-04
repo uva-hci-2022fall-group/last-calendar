@@ -3,12 +3,13 @@ import SingleEventTab from "./SingleEventTab";
 import RepetitiveRoutineTab from "./RepetitiveRoutineTab";
 import MultipleEventTab from "./MultipleEventTab";
 import LongTermPlanTab from "./LongTermPlanTab";
+import Another from "./Another";
 
 
 const EventCreationPage = () => {
 
     return (
-        <Tabs defaultActiveKey="1" centered={true}>
+        <Tabs defaultActiveKey="5" centered={true}>
             <Tabs.TabPane tab="Single Event" key="1">
                 <SingleEventTab/>
             </Tabs.TabPane>
@@ -20,6 +21,9 @@ const EventCreationPage = () => {
             </Tabs.TabPane>
             <Tabs.TabPane tab="Long-Term Plan" key="4">
                 <LongTermPlanTab/>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Unnamed" key="5">
+                <Another/>
             </Tabs.TabPane>
         </Tabs>
     )
